@@ -30,6 +30,10 @@ public:
 public:
 	afx_msg void OnAppAbout();
 	DECLARE_MESSAGE_MAP()
+
+private:
+	Gdiplus::GdiplusStartupInput gdiplusStartupInput;
+	ULONG_PTR gdiplusToken = 0;
 };
 
 extern CPCAS1PrototypeApp theApp;

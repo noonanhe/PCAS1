@@ -64,6 +64,8 @@ BOOL CPCAS1PrototypeApp::InitInstance()
 
 	CWinApp::InitInstance();
 
+	Gdiplus::GdiplusStartup(&gdiplusToken, &gdiplusStartupInput, NULL);
+
 
 	// Initialize OLE libraries
 	if (!AfxOleInit())
@@ -112,6 +114,7 @@ BOOL CPCAS1PrototypeApp::InitInstance()
 
 int CPCAS1PrototypeApp::ExitInstance()
 {
+	Gdiplus::GdiplusShutdown(gdiplusToken);
 	//TODO: handle additional resources you may have added
 	AfxOleTerm(FALSE);
 

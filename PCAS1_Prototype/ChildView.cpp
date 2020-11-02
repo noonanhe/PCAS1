@@ -1,6 +1,6 @@
-
-// ChildView.cpp : implementation of the CChildView class
-//
+/**
+* \file ChildView.cpp
+*/
 
 #include "pch.h"
 #include "framework.h"
@@ -11,13 +11,21 @@
 #define new DEBUG_NEW
 #endif
 
+using namespace Gdiplus;
 
 // CChildView
 
+/**
+* Constructor
+*/
 CChildView::CChildView()
 {
+	
 }
 
+/**
+* Destructor
+*/
 CChildView::~CChildView()
 {
 }
@@ -30,7 +38,11 @@ END_MESSAGE_MAP()
 
 
 // CChildView message handlers
-
+/**
+ * This function is called before the window is created.
+ * \param cs A structure with the window creation parameters
+ * \returns TRUE
+ */
 BOOL CChildView::PreCreateWindow(CREATESTRUCT& cs) 
 {
 	if (!CWnd::PreCreateWindow(cs))
@@ -44,12 +56,28 @@ BOOL CChildView::PreCreateWindow(CREATESTRUCT& cs)
 	return TRUE;
 }
 
+/**
+ * This function is called to draw in the window.
+ *
+ * This function is called in response to a drawing message
+ * whenever we need to redraw the window on the screen.
+ * It is responsible for painting the window.
+ */
 void CChildView::OnPaint() 
 {
+
+	//40px / m
+
 	CPaintDC dc(this); // device context for painting
 	
-	// TODO: Add your message handler code here
-	
-	// Do not call CWnd::OnPaint() for painting messages
+	Graphics graphics(dc.m_hDC); //Create GDI+ graphics context
+
+	//lets draw the x & y axis
+	Pen pen(Color(0, 0, 0), 3); //<black pen
+	graphics.DrawLine(&pen, 0, 499, 2000, 499); //<x-axis
+	graphics.DrawLine(&pen, 159, 10, 159, 990); //<y-axis
+
+	mVehicle.OnDraw(&graphics);
+	mPedestrian.OnDraw(&graphics);
 }
 
