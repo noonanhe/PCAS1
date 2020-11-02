@@ -10,13 +10,13 @@ class PCASystem
 {
 private:
 	const double minDistance = .5; //<minimum distance vehicle and pedestrian are allowed to come within
-	const double maxDecel = .7; //mas deceleration allowed
+	const double maxDecel = .7; //max deceleration allowed
 
 public:
 	PCASystem() {};
-	double CheckCollision();
+	void CheckCollision();
 	//IsCorrupt()??
-	//ApplyBrakes()
+	void ApplyBrakes();
 	//ReleaseBrakes()
 };
 
