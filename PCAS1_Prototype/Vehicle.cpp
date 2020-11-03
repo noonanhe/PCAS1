@@ -52,3 +52,32 @@ void Vehicle::Move(double time)
 {
 
 }
+
+/** Passes on pedestrian information to the sensor
+* param ped: the pedestrian to detect
+*/
+void Vehicle::SensePedestrian(shared_ptr<Pedestrian> ped)
+{
+    sensor->Detect(ped);
+}
+
+
+void Vehicle::ProcessData()
+{
+    //put vehicle info in vector form
+    vector<double> vehicle_info;
+    vehicle_info.push_back(x);
+    vehicle_info.push_back(y);
+    //check for a collision
+    double decel = pca_system->CheckCollision(sensor->SendData(), vehicle_info);
+    if (decel == 0)
+    {
+        //release brakes if they've been applied
+    }
+    else
+    {
+        //decelerate
+       decel = brakes->SlowDown(decel);
+       acceleration = decel;
+    }
+}

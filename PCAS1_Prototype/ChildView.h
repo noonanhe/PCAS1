@@ -25,7 +25,7 @@ public:
 	// x = 0, y = 0, acceleration =0
 	Vehicle mVehicle = Vehicle(0, 0, 0);
 	//x = 35, y = -7 m, velocity =0
-	Pedestrian mPedestrian = Pedestrian(35, -7, 0);
+	std::shared_ptr<Pedestrian> mPedestrian = std::make_shared<Pedestrian>(35, -7, 0);
 // Operations
 public:
 

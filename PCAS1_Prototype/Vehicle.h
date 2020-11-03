@@ -8,6 +8,7 @@
 #include "PCASystem.h"
 #include "BrakeActuator.h"
 #include <memory>
+
 #pragma once
 /** Class that models a vehicle */
 class Vehicle
@@ -52,6 +53,8 @@ public:
 
 	void OnDraw(Gdiplus::Graphics* graphics); //<draws vehicle image
 	void Move(double time); //<updates position of vehicle
+	void SensePedestrian(std::shared_ptr<Pedestrian> ped);
+	void ProcessData();
 
 private:
 	const double steady_state_speed = 13.9; //in meters/second

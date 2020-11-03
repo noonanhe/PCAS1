@@ -78,6 +78,7 @@ void CChildView::OnPaint()
 	graphics.DrawLine(&pen, 159, 10, 159, 990); //<y-axis
 
 	mVehicle.OnDraw(&graphics);
-	mPedestrian.OnDraw(&graphics);
+	mPedestrian->OnDraw(&graphics);
+	mVehicle.SensePedestrian(mPedestrian);
 }
 

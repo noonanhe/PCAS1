@@ -4,6 +4,7 @@
 * Defines the Pedestrian Sensor class
 */
 #include <memory>
+#include <vector>
 #include "Pedestrian.h"
 
 #pragma once
@@ -20,6 +21,7 @@ private:
 	std::shared_ptr<Pedestrian> detected_pedestrian;
 public:
 	PedestrianSensor() {} //<constructor
-	void SendData();
+	std::vector<double> SendData();
+	void Detect(std::shared_ptr<Pedestrian> ped) { detected_pedestrian = ped; };
 };
 
