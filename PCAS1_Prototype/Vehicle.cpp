@@ -50,7 +50,8 @@ void Vehicle::OnDraw(Gdiplus::Graphics* graphics)
 */
 void Vehicle::Move(double time)
 {
-
+    //dummy
+    x = x + 10;
 }
 
 /** Passes on pedestrian information to the sensor

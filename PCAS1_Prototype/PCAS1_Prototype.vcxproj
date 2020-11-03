@@ -185,6 +185,7 @@
   <ItemGroup>
     <ClInclude Include="BrakeActuator.h" />
     <ClInclude Include="ChildView.h" />
+    <ClInclude Include="DoubleBufferDC.h" />
     <ClInclude Include="framework.h" />
     <ClInclude Include="MainFrm.h" />
     <ClInclude Include="PCAS1_Prototype.h" />

@@ -41,5 +41,8 @@ public:
 protected:
 	afx_msg void OnPaint();
 	DECLARE_MESSAGE_MAP()
+public:
+	afx_msg BOOL OnEraseBkgnd(CDC* pDC);
+	afx_msg void OnRunScenario1();
 };
 

@@ -6,6 +6,7 @@
 #include "framework.h"
 #include "PCAS1_Prototype.h"
 #include "ChildView.h"
+#include "DoubleBufferDC.h"
 
 #ifdef _DEBUG
 #define new DEBUG_NEW
@@ -33,6 +34,8 @@ CChildView::~CChildView()
 
 BEGIN_MESSAGE_MAP(CChildView, CWnd)
 	ON_WM_PAINT()
+	ON_WM_ERASEBKGND()
+	ON_COMMAND(ID_RUN_SCENARIO1, &CChildView::OnRunScenario1)
 END_MESSAGE_MAP()
 
 
@@ -68,8 +71,9 @@ void CChildView::OnPaint()
 
 	//40px / m
 
-	CPaintDC dc(this); // device context for painting
-	
+	CPaintDC paintDC(this); // device context for painting
+	CDoubleBufferDC dc(&paintDC); //device context for painting
+
 	Graphics graphics(dc.m_hDC); //Create GDI+ graphics context
 
 	//lets draw the x & y axis
@@ -79,6 +83,28 @@ void CChildView::OnPaint()
 
 	mVehicle.OnDraw(&graphics);
 	mPedestrian->OnDraw(&graphics);
-	mVehicle.SensePedestrian(mPedestrian);
+
+
+
+	//mVehicle.SensePedestrian(mPedestrian);
 }
 
+
+
+BOOL CChildView::OnEraseBkgnd(CDC* pDC)
+{
+	// TODO: Add your message handler code here and/or call default
+
+	return FALSE;
+}
+
+
+void CChildView::OnRunScenario1()
+{
+	// TODO: Add your command handler code here
+	mVehicle.Move(0);
+	Invalidate();
+
+	mVehicle.Move(0);
+	Invalidate();
+}
