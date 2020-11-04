@@ -20,8 +20,8 @@ private:
 
 	std::shared_ptr<Pedestrian> detected_pedestrian;
 public:
-	PedestrianSensor() {} //<constructor
+	PedestrianSensor() { detected_pedestrian = std::make_shared<Pedestrian>(0, 0, 0); } //<constructor
 	std::vector<double> SendData();
-	void Detect(std::shared_ptr<Pedestrian> ped) { detected_pedestrian = ped; };
+	void Detect(std::shared_ptr<Pedestrian> ped);
 };
 

@@ -12,7 +12,7 @@ class PCASystem
 {
 private:
 	const double minDistance = .5; //<minimum distance vehicle and pedestrian are allowed to come within
-	const double maxDecel = .7; //max deceleration allowed
+	const double maxDecel = 6.867; //max deceleration allowed m/s^2
 
 	std::shared_ptr<PedestrianSensor> sensor;
 public:

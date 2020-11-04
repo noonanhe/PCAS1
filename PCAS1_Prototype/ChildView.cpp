@@ -83,11 +83,50 @@ void CChildView::OnPaint()
 	graphics.DrawLine(&pen, 159, 10, 159, 990); //<y-axis
 
 	mVehicle.OnDraw(&graphics);
-	mPedestrian->OnDraw(&graphics);
+	mPedestrian.OnDraw(&graphics);
 
+	if (avoided)
+	{
+		FontFamily fontFamily(L"Arial");
+		Gdiplus::Font font(&fontFamily, 16);
+		SolidBrush green(Color(0, 64, 0));
+		graphics.DrawString(L"Collision Avoided!", -1, &font, PointF(600, 50), &green);
+		avoided = false;
+	}
+}
 
+/**
+* This function is responsible for running Static Scenario 1
+*/
+void CChildView::OnRunScenario1()
+{
+	mPedestrian.setYCoordinate(0); //<move pedestrian to correct position
+	mVehicle.SensePedestrian(std::make_shared<Pedestrian>(mPedestrian)); //sense pedestrian
+	//Set a timer to run every 100 ms, this function basically calls OnTimer() every 100 ms
+	SetTimer(1, 100,0);
 
-	//mVehicle.SensePedestrian(mPedestrian);
+	//KillTimer(1);
+}
+
+/** Event handler for a timer
+* param nIDEvent: id of a timer
+*/
+void CChildView::OnTimer(UINT_PTR nIDEvent)
+{
+	CWnd::OnTimer(nIDEvent);
+	//if the vehicle has traveled < 35 m
+	if (mVehicle.getXCoordinate() < 35 && mVehicle.getVelocity() > 0)
+	{
+		mVehicle.ProcessData();
+		mVehicle.Move(.1); //update vehicles position based on 100 ms passing
+		Invalidate(); //have to force screen redraw
+	}
+	else
+	{
+		avoided = true;
+		Invalidate();
+		KillTimer(1);
+	}
 }
 
 
@@ -97,28 +136,4 @@ BOOL CChildView::OnEraseBkgnd(CDC* pDC)
 	// TODO: Add your message handler code here and/or call default
 
 	return FALSE;
-}
-
-
-void CChildView::OnRunScenario1()
-{
-	mPedestrian->setYCoordinate(0);
-	// TODO: Add your command handler code here
-	SetTimer(1, 100,0);
-
-	//KillTimer(1);
-}
-
-
-void CChildView::OnTimer(UINT_PTR nIDEvent)
-{
-	// TODO: Add your message handler code here and/or call default
-
-	CWnd::OnTimer(nIDEvent);
-	//run move function every 100 ms
-	if (mVehicle.getXCoordinate() < 35)
-	{
-		mVehicle.Move(.1);
-		Invalidate(); //have to force screen redraw
-	}
 }

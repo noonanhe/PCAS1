@@ -14,9 +14,9 @@ double PCASystem::CheckCollision(vector<double> ped_info, vector<double> vehicle
 	// get info from sensor
 	int x = 1;
 
-	if (x == 1) //pedestrian detected
+	if (abs(ped_info[0] - vehicle_info[0]) <= 35) //pedestrian detected
 	{
-		return 1; //return some deceleration value to apply
+		return -3; //return some deceleration value to apply
 	}
 	else if (x == 0) // pedestrian not detected
 	{

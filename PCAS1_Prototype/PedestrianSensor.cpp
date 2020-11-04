@@ -16,3 +16,8 @@ vector<double> PedestrianSensor::SendData()
 	info.push_back(detected_pedestrian->getYCoordiante());
 	return info;
 }
+
+void PedestrianSensor::Detect(std::shared_ptr<Pedestrian> ped)
+{
+	detected_pedestrian = ped;
+}

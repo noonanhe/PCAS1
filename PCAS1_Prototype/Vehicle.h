@@ -38,6 +38,11 @@ public:
 		return acceleration;
 	}
 
+	double getVelocity()
+	{
+		return velocity;
+	}
+
 	/************* Setters ****************/
 	double setAcceleration(double acceleration) {
 		this->acceleration = acceleration;

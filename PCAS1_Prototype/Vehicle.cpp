@@ -29,6 +29,10 @@ Vehicle::Vehicle(double x, double y, double acceleration)
     {
         AfxMessageBox(L"Failed to open images/vehicle.png");
     }
+
+    sensor = make_shared<PedestrianSensor>();
+    brakes = make_shared<BrakeActuator>();
+    pca_system = make_shared<PCASystem>();
 }
 
 /** 
@@ -52,8 +56,13 @@ void Vehicle::OnDraw(Gdiplus::Graphics* graphics)
 */
 void Vehicle::Move(double time)
 {
-    //displacemt = velocity*time + 1/2(accel)time^2
-    x = x + velocity * time + (1 / 2 * acceleration * pow(time, 2));
+    if (velocity > 0)
+    {
+        //velocity = init_velocity + accel*time
+        velocity = velocity + (acceleration * time);
+        //displacemt = velocity*time + 1/2(accel)time^2
+        x = x + velocity * time + (1 / 2 * acceleration * pow(time, 2));
+    }
 }
 
 /** Passes on pedestrian information to the sensor
@@ -80,7 +89,7 @@ void Vehicle::ProcessData()
     else
     {
         //decelerate
-       decel = brakes->SlowDown(decel);
+       //decel = brakes->SlowDown(decel);
        acceleration = decel;
     }
 }
