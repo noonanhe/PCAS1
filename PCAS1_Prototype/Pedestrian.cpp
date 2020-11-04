@@ -35,8 +35,6 @@ Pedestrian::Pedestrian( double x, double y,double speed )
 */
 void Pedestrian::OnDraw(Gdiplus::Graphics* graphics)
 {
-    FontFamily fontFamily(L"Arial");
-
     //change x,y to proper coordinates cause origin is at 160, 500
     float graph_x = 160 + (x * 40) - mImage->GetWidth();
     float graph_y = 500 - (y * 40) - (mImage->GetHeight() / 2);
@@ -48,7 +46,18 @@ void Pedestrian::OnDraw(Gdiplus::Graphics* graphics)
 * Updates the pedestrian's position
 * param: time The elapsed time
 */
-void Move(double time)
+void Pedestrian::Move(double time)
 {
 
+}
+
+/** 
+* This function resets the pedestrian to its default position and velocity
+* and is called after a scneario has successfully completed
+*/
+void Pedestrian::Reset()
+{
+    x = 35;
+    y = -7;
+    velocity = 0;
 }

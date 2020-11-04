@@ -17,6 +17,9 @@ vector<double> PedestrianSensor::SendData()
 	return info;
 }
 
+/** Setter for detected_pedestrian
+* param: ped The Pedestrian to detect
+*/
 void PedestrianSensor::Detect(std::shared_ptr<Pedestrian> ped)
 {
 	detected_pedestrian = ped;

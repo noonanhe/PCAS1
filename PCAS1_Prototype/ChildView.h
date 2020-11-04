@@ -26,7 +26,8 @@ public:
 	Vehicle mVehicle = Vehicle(0, 0, 0);
 	//x = 35, y = -7 m, velocity =0
 	Pedestrian mPedestrian = Pedestrian(35, -7, 0);
-	bool avoided = false;
+	//indicates if a collision has been avoided in a scenario
+	bool avoided = false; //used for drawing text
 // Operations
 public:
 
@@ -46,5 +47,7 @@ public:
 	afx_msg BOOL OnEraseBkgnd(CDC* pDC);
 	afx_msg void OnRunScenario1();
 	afx_msg void OnTimer(UINT_PTR nIDEvent);
+	afx_msg void OnRunStaticscenario2();
+	afx_msg void OnRunStaticscenario3();
 };
 

@@ -60,6 +60,7 @@ public:
 	void Move(double time); //<updates position of vehicle
 	void SensePedestrian(std::shared_ptr<Pedestrian> ped);
 	void ProcessData();
+	void Reset();
 
 private:
 	const double steady_state_speed = 13.9; //in meters/second

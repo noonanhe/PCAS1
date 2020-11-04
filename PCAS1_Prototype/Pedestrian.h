@@ -49,6 +49,7 @@ public:
 
 	void OnDraw(Gdiplus::Graphics* graphics); //<draws vehicle image
 	void Move(double time); //<updates pedestrians position
+	void Reset(); //<resets to defaults
 
 private:
 	double velocity; //<speed of the pedestiran

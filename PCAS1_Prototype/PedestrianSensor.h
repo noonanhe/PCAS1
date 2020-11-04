@@ -21,7 +21,7 @@ private:
 	std::shared_ptr<Pedestrian> detected_pedestrian;
 public:
 	PedestrianSensor() { detected_pedestrian = std::make_shared<Pedestrian>(0, 0, 0); } //<constructor
-	std::vector<double> SendData();
-	void Detect(std::shared_ptr<Pedestrian> ped);
+	std::vector<double> SendData(); //<sends pedestrian data
+	void Detect(std::shared_ptr<Pedestrian> ped); //setter for detected_pedestrian variable
 };
 

@@ -20,7 +20,7 @@ Vehicle::Vehicle(double x, double y, double acceleration)
     this->x = x;
     this->y = y;
     this->acceleration = acceleration;
-    this->velocity = steady_state_speed;
+    this->velocity = steady_state_speed; //default velocity is the steady state speed
     this->failSafe = false;
 
     //loading image 
@@ -41,8 +41,6 @@ Vehicle::Vehicle(double x, double y, double acceleration)
 */
 void Vehicle::OnDraw(Gdiplus::Graphics* graphics)
 {
-	FontFamily fontFamily(L"Arial");
-
     //change x,y to proper coordinates cause origin is at 160, 500
     float graph_x = 160 + (x*40) - mImage->GetWidth();
     float graph_y = 500 - (y*40) - (mImage->GetHeight()/2);
@@ -56,6 +54,8 @@ void Vehicle::OnDraw(Gdiplus::Graphics* graphics)
 */
 void Vehicle::Move(double time)
 {
+    //i think this if statement is going to have to change, right now it only moves the vehicle until it
+    //comes to a complete stop
     if (velocity > 0)
     {
         //velocity = init_velocity + accel*time
@@ -73,7 +73,10 @@ void Vehicle::SensePedestrian(shared_ptr<Pedestrian> ped)
     sensor->Detect(ped);
 }
 
-
+/** 
+* This function is resoponsible for calling the PCASystem's Check Collision function
+* and handling the deceleration value returned from that function call
+*/
 void Vehicle::ProcessData()
 {
     //put vehicle info in vector form
@@ -82,14 +85,29 @@ void Vehicle::ProcessData()
     vehicle_info.push_back(y);
     //check for a collision
     double decel = pca_system->CheckCollision(sensor->SendData(), vehicle_info);
+
+    //if no collision imminent
     if (decel == 0)
     {
         //release brakes if they've been applied
     }
-    else
+    else //there's a collision possibility
     {
         //decelerate
        //decel = brakes->SlowDown(decel);
        acceleration = decel;
     }
+}
+
+/**
+* This function is responsible for setting the vehicle's position, acceleration, and velocity
+* back to the default after a scenario is run
+*/
+void Vehicle::Reset()
+{
+    x = 0; //vehicle's x position
+    y = 0; //vehicle's y position
+    acceleration = 0; //vehicle's acceleration
+    velocity = steady_state_speed; //represents vehicles current speed
+    failSafe = false; //indicates whether vehicle is in fail safe mode
 }
