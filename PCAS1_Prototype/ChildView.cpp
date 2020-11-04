@@ -36,6 +36,7 @@ BEGIN_MESSAGE_MAP(CChildView, CWnd)
 	ON_WM_PAINT()
 	ON_WM_ERASEBKGND()
 	ON_COMMAND(ID_RUN_SCENARIO1, &CChildView::OnRunScenario1)
+	ON_WM_TIMER()
 END_MESSAGE_MAP()
 
 
@@ -101,10 +102,23 @@ BOOL CChildView::OnEraseBkgnd(CDC* pDC)
 
 void CChildView::OnRunScenario1()
 {
+	mPedestrian->setYCoordinate(0);
 	// TODO: Add your command handler code here
-	mVehicle.Move(0);
-	Invalidate();
+	SetTimer(1, 100,0);
 
-	mVehicle.Move(0);
-	Invalidate();
+	//KillTimer(1);
+}
+
+
+void CChildView::OnTimer(UINT_PTR nIDEvent)
+{
+	// TODO: Add your message handler code here and/or call default
+
+	CWnd::OnTimer(nIDEvent);
+	//run move function every 100 ms
+	if (mVehicle.getXCoordinate() < 35)
+	{
+		mVehicle.Move(.1);
+		Invalidate(); //have to force screen redraw
+	}
 }

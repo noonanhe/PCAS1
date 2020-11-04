@@ -20,6 +20,8 @@ Vehicle::Vehicle(double x, double y, double acceleration)
     this->x = x;
     this->y = y;
     this->acceleration = acceleration;
+    this->velocity = steady_state_speed;
+    this->failSafe = false;
 
     //loading image 
     mImage = Bitmap::FromFile(L"images/vehicle.png");
@@ -46,12 +48,12 @@ void Vehicle::OnDraw(Gdiplus::Graphics* graphics)
 
 /**
 * Updates vehicle position
-* param time: The elapsed time
+* param time: The elapsed time in seconds
 */
 void Vehicle::Move(double time)
 {
-    //dummy
-    x = x + 10;
+    //displacemt = velocity*time + 1/2(accel)time^2
+    x = x + velocity * time + (1 / 2 * acceleration * pow(time, 2));
 }
 
 /** Passes on pedestrian information to the sensor

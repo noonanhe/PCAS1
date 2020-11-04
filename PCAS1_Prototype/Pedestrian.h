@@ -31,19 +31,19 @@ public:
 	}
 
 	/************** Setters **************/
-	double setVelocity(double velocity) {
+	void setVelocity(double velocity) {
 		this->velocity = velocity;
 	}
 
-	double setDiameter(double area) {
+	void setDiameter(double area) {
 		this->diameter = area;
 	}
 
-	double setXCoordinate(double x) {
+	void setXCoordinate(double x) {
 		this->x = x;
 	}
 
-	double setYCoordiante(double y) {
+	void setYCoordinate(double y) {
 		this->y = y;
 	}
 

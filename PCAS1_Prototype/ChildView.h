@@ -44,5 +44,6 @@ protected:
 public:
 	afx_msg BOOL OnEraseBkgnd(CDC* pDC);
 	afx_msg void OnRunScenario1();
+	afx_msg void OnTimer(UINT_PTR nIDEvent);
 };
 

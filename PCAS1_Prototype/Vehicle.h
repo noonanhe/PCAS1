@@ -30,7 +30,7 @@ public:
 		return x;
 	}
 
-	double getYCoordiante() {
+	double getYCoordinate() {
 		return y;
 	}
 
