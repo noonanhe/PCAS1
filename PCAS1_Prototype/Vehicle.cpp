@@ -58,17 +58,18 @@ void Vehicle::Move(double time)
     //comes to a complete stop
     if (velocity > 0)
     {
+        
+        //displacemt = velocity*time + 1/2(accel)time^2
+        x = x + (velocity * time) + (.5 * acceleration * pow(time, 2));
         //velocity = init_velocity + accel*time
         velocity = velocity + (acceleration * time);
-        //displacemt = velocity*time + 1/2(accel)time^2
-        x = x + velocity * time + (1 / 2 * acceleration * pow(time, 2));
     }
 }
 
 /** Passes on pedestrian information to the sensor
 * param ped: the pedestrian to detect
 */
-void Vehicle::SensePedestrian(shared_ptr<Pedestrian> ped)
+void Vehicle::SensePedestrian(Pedestrian* ped)
 {
     sensor->Detect(ped);
 }
@@ -83,6 +84,8 @@ void Vehicle::ProcessData()
     vector<double> vehicle_info;
     vehicle_info.push_back(x);
     vehicle_info.push_back(y);
+    vehicle_info.push_back(velocity);
+    vehicle_info.push_back(acceleration);
     //check for a collision
     double decel = pca_system->CheckCollision(sensor->SendData(), vehicle_info);
 

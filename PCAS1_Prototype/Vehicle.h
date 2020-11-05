@@ -58,7 +58,7 @@ public:
 
 	void OnDraw(Gdiplus::Graphics* graphics); //<draws vehicle image
 	void Move(double time); //<updates position of vehicle
-	void SensePedestrian(std::shared_ptr<Pedestrian> ped);
+	void SensePedestrian(Pedestrian* ped);
 	void ProcessData();
 	void Reset();
 

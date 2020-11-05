@@ -18,10 +18,10 @@ private:
 	double speedAccuracy = .2; //delivers speed with accuracy +/- .2m/s
 	double directionAccuracy = 5; //delivers direction with +/- 5 deg accuracy
 
-	std::shared_ptr<Pedestrian> detected_pedestrian;
+	Pedestrian* detected_pedestrian;
 public:
-	PedestrianSensor() { detected_pedestrian = std::make_shared<Pedestrian>(0, 0, 0); } //<constructor
+	PedestrianSensor() { } //<constructor
 	std::vector<double> SendData(); //<sends pedestrian data
-	void Detect(std::shared_ptr<Pedestrian> ped); //setter for detected_pedestrian variable
+	void Detect(Pedestrian* ped); //setter for detected_pedestrian variable
 };
 

@@ -118,10 +118,11 @@ void CChildView::OnRunScenario1()
 {
 
 	mPedestrian.setYCoordinate(0); //set the pedestrian's Y position to 0
-	mVehicle.SensePedestrian(std::make_shared<Pedestrian>(mPedestrian)); //sense pedestrian
+	mVehicle.SensePedestrian(&mPedestrian); //sense pedestrian
 	//Set a timer to run every 100 ms, this function basically calls OnTimer() every 100 ms
 	SetTimer(1, 100,0);
 }
+
 
 /**
 * This function is responsible for running Static Scenario 2
@@ -130,7 +131,7 @@ void CChildView::OnRunScenario1()
 void CChildView::OnRunStaticscenario2()
 {
 	mPedestrian.setYCoordinate(-2); //set the pedestrian's Y position to -2
-	mVehicle.SensePedestrian(std::make_shared<Pedestrian>(mPedestrian)); //sense pedestrian
+	mVehicle.SensePedestrian(&mPedestrian); //sense pedestrian
 	SetTimer(1, 100, 0); //run the scenario
 }
 
@@ -142,7 +143,7 @@ void CChildView::OnRunStaticscenario3()
 {
 	// TODO: Add your command handler code here
 	mPedestrian.setYCoordinate(-4); //set ped's Y position to -4
-	mVehicle.SensePedestrian(std::make_shared<Pedestrian>(mPedestrian)); //sense pedestrian
+	mVehicle.SensePedestrian(&mPedestrian); //sense pedestrian
 	SetTimer(1, 100, 0); //run the scenario
 }
 
@@ -155,7 +156,8 @@ void CChildView::OnRunStartStopscenario1()
 	// TODO: Add your command handler code here
 	mPedestrian.setYCoordinate(-7); //set ped's Y position to -7
 	mPedestrian.setLimit(0); // Set pedestrian's final position to be at 0
-	mVehicle.SensePedestrian(std::make_shared<Pedestrian>(mPedestrian)); //sense pedestrian
+	mPedestrian.setVelocity(2.78); // set pedestrian's velocity to be 2.78
+	mVehicle.SensePedestrian(&mPedestrian); //sense pedestrian
 	SetTimer(2, 100, 0); //run the scenario
 }
 
@@ -167,7 +169,8 @@ void CChildView::OnRunStartStopscenario2()
 {
 	mPedestrian.setYCoordinate(-7); //set ped's Y position to -7
 	mPedestrian.setLimit(-2); // Set pedestrian's final position to be at -2
-	mVehicle.SensePedestrian(std::make_shared<Pedestrian>(mPedestrian)); //sense pedestrian
+	mPedestrian.setVelocity(2.78); // set pedestrian's velocity to be 2.78
+	mVehicle.SensePedestrian(&mPedestrian); //sense pedestrian
 	SetTimer(2, 100, 0); //run the scenario
 }
 
@@ -179,7 +182,8 @@ void CChildView::OnRunStartStopscenario3()
 {
 	mPedestrian.setYCoordinate(-7); //set ped's Y position to -7
 	mPedestrian.setLimit(-3); // Set pedestrian's final position to be at -3
-	mVehicle.SensePedestrian(std::make_shared<Pedestrian>(mPedestrian)); //sense pedestrian
+	mPedestrian.setVelocity(2.78); // set pedestrian's velocity to be 2.78
+	mVehicle.SensePedestrian(&mPedestrian); //sense pedestrian
 	SetTimer(2, 100, 0); //run the scenario
 }
 
@@ -191,7 +195,8 @@ void CChildView::OnRunStartStopscenario4()
 {
 	mPedestrian.setYCoordinate(-7); //set ped's Y position to -7
 	mPedestrian.setLimit(-5); // Set pedestrian's final position to be at -5
-	mVehicle.SensePedestrian(std::make_shared<Pedestrian>(mPedestrian)); //sense pedestrian
+	mPedestrian.setVelocity(2.78); // set pedestrian's velocity to be 2.78
+	mVehicle.SensePedestrian(&mPedestrian); //sense pedestrian
 	SetTimer(2, 100, 0); //run the scenario
 }
 
@@ -204,8 +209,8 @@ void CChildView::OnRunStopStartscenario1()
 	mPedestrian.setYCoordinate(0); //set ped's Y position to 0
 	mPedestrian.setLimit(1000); // No limit on pedestrian position
 	mPedestrian.setDelay(1.5); // Delay time set to 1.5 seconds - might need to be corrected
-	mVehicle.SensePedestrian(std::make_shared<Pedestrian>(mPedestrian)); //sense pedestrian
-	SetTimer(2, 100, 0); //run the scenario
+	mVehicle.SensePedestrian(&mPedestrian); //sense pedestrian
+	SetTimer(3, 100, 0); //run the scenario
 }
 
 /**
@@ -217,8 +222,8 @@ void CChildView::OnRunStopStartscenario2()
 	mPedestrian.setYCoordinate(-2); //set ped's Y position to -2
 	mPedestrian.setLimit(1000);  // No limit on pedestrian position
 	mPedestrian.setDelay(1.8); // Delay time set to 1.8 seconds - might need to be corrected
-	mVehicle.SensePedestrian(std::make_shared<Pedestrian>(mPedestrian)); //sense pedestrian
-	SetTimer(2, 100, 0); //run the scenario
+	mVehicle.SensePedestrian(&mPedestrian); //sense pedestrian
+	SetTimer(3, 100, 0); //run the scenario
 }
 
 /**
@@ -230,7 +235,7 @@ void CChildView::OnRunStopStartscenario3()
 	mPedestrian.setYCoordinate(-2); //set ped's Y position to -4
 	mPedestrian.setLimit(1000); // No limit on pedestrian position
 	mPedestrian.setDelay(1.1); // Delay time set to 1.1 seconds - might need to be corrected
-	mVehicle.SensePedestrian(std::make_shared<Pedestrian>(mPedestrian)); //sense pedestrian
+	mVehicle.SensePedestrian(&mPedestrian); //sense pedestrian
 	SetTimer(2, 100, 0); //run the scenario
 }
 
@@ -248,45 +253,65 @@ void CChildView::OnTimer(UINT_PTR nIDEvent)
 	{
 		//case statement for Static Scenarios
 	case 1:
+		//if vehicle hasn't passed pedestrian and isn't stopped
 		if (mVehicle.getXCoordinate() < 40 && mVehicle.getVelocity() > 0)
 		{
-			mVehicle.ProcessData();
+			mVehicle.ProcessData(); //check for collisions, update decel as necessary
 			mVehicle.Move(.1); //update vehicles position based on 100 ms passing
 			Invalidate(); //have to force screen redraw
 		}
 		else
 		{
-			avoided = true;
-			KillTimer(1);
-			Invalidate();
-			Sleep(1000);
-			mVehicle.Reset();
-			mPedestrian.Reset();
-			Invalidate();
+			avoided = true; //this is needed for "Collision Avoided" text to appear
+			KillTimer(1); //kill the timer cause the scenario is done
+			Invalidate(); //force screen to redraw so we can see the text
+			Sleep(1000); //pause
+			mVehicle.Reset(); //reset vehicle so another scenario can be run
+			mPedestrian.Reset(); //reset pedestrian so another scenario can be run
+			Invalidate(); //force screen to redraw
 		}
 		break;
 
-	// in motion scenarios
+	// for start stop scenarios where pedestrian starts out moving then stops
 	case 2:
 		if (mVehicle.getXCoordinate() < 40 && mVehicle.getVelocity() > 0)
 		{
-			mVehicle.ProcessData();
-			mPedestrian.Move(.1);
+			mVehicle.ProcessData(); //check for collisions, update decel as necessary
+			mPedestrian.Move(.1); //update pedestrian's position based on 100 ms passing
 			mVehicle.Move(.1); //update vehicles position based on 100 ms passing
 			Invalidate(); //have to force screen redraw
 		}
 		else
 		{
-			// avoided = true;
-			KillTimer(2);
-			Invalidate();
-			Sleep(1000);
-			mVehicle.Reset();
-			mPedestrian.Reset();
-			Invalidate();
+			avoided = true; //this is needed for "Collision Avoided" text to appear
+			KillTimer(2); //kill the timer cause the scenario is done
+			Invalidate(); //force screen to redraw so we can see the text
+			Sleep(1000); //pause
+			mVehicle.Reset(); //reset vehicle so another scenario can be run
+			mPedestrian.Reset(); //reset pedestrian so another scenario can be run
+			Invalidate(); //force screen to redraw
 		}
 		break;
-
+		//for stop start scenarios where pedestrian has delayed start time
+	case 3:
+		if (mVehicle.getXCoordinate() < 40)
+		{
+			mVehicle.ProcessData(); //check for collisions, update decel as necessary
+			mPedestrian.Move(.1); //update pedestrian's position based on 100 ms passing
+			mVehicle.Move(.1); //update vehicles position based on 100 ms passing
+			Invalidate(); //have to force screen redraw
+		}
+		else
+		{
+			avoided = true; //this is needed for "Collision Avoided" text to appear
+			KillTimer(3); //kill the timer cause the scenario is done
+			Invalidate(); //force screen to redraw so we can see the text
+			Sleep(1000); //pause
+			mVehicle.Reset(); //reset vehicle so another scenario can be run
+			mPedestrian.Reset(); //reset pedestrian so another scenario can be run
+			Invalidate(); //force screen to redraw
+		}
+		break;
 	}
 
 

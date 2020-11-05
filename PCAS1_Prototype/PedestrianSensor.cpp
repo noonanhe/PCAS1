@@ -14,13 +14,14 @@ vector<double> PedestrianSensor::SendData()
 	vector<double> info;
 	info.push_back(detected_pedestrian->getXCoordinate());
 	info.push_back(detected_pedestrian->getYCoordiante());
+	info.push_back(detected_pedestrian->getVelocity());
 	return info;
 }
 
 /** Setter for detected_pedestrian
 * param: ped The Pedestrian to detect
 */
-void PedestrianSensor::Detect(std::shared_ptr<Pedestrian> ped)
+void PedestrianSensor::Detect(Pedestrian* ped)
 {
 	detected_pedestrian = ped;
 }

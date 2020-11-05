@@ -67,8 +67,8 @@ private:
 	double x; //x coordinate
 	double y; //y coordinate
 	double limit = 0; // Location where the pedestrian stops
-	double elapsed = 0; // time elapsed since start
 	double delay = 0; // delay before movement
+	double elapsed_time = 0; //time since scenario started
 
 	Gdiplus::Bitmap* mImage;
 };
