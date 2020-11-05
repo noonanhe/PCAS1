@@ -61,7 +61,7 @@ private:
 	double diameter = .5; //<diameter of pedestrian in m
 	double x; //x coordinate
 	double y; //y coordinate
-	double limit = 0;
+	double limit = 0; // Location where the pedestrian stops
 
 	Gdiplus::Bitmap* mImage;
 };
