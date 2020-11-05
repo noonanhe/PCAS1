@@ -42,6 +42,7 @@ BEGIN_MESSAGE_MAP(CChildView, CWnd)
 	ON_WM_TIMER()
 	ON_COMMAND(ID_RUN_STATICSCENARIO2, &CChildView::OnRunStaticscenario2)
 	ON_COMMAND(ID_RUN_STATICSCENARIO3, &CChildView::OnRunStaticscenario3)
+	ON_COMMAND(ID_RUN_IN_MOTIONSCENARIO1, &CChildView::OnRunInMotionscenario1)
 END_MESSAGE_MAP()
 
 
@@ -109,6 +110,7 @@ void CChildView::OnPaint()
 */
 void CChildView::OnRunScenario1()
 {
+
 	mPedestrian.setYCoordinate(0); //set the pedestrian's Y position to 0
 	mVehicle.SensePedestrian(std::make_shared<Pedestrian>(mPedestrian)); //sense pedestrian
 	//Set a timer to run every 100 ms, this function basically calls OnTimer() every 100 ms
@@ -136,6 +138,22 @@ void CChildView::OnRunStaticscenario3()
 	mPedestrian.setYCoordinate(-4); //set ped's Y position to -4
 	mVehicle.SensePedestrian(std::make_shared<Pedestrian>(mPedestrian)); //sense pedestrian
 	SetTimer(1, 100, 0); //run the scenario
+}
+
+/**
+* This funciton is responsible for running Static Scenario 3
+* Pedestrian remains static at position (35, -4)
+*/
+void CChildView::OnRunInMotionscenario1()
+{
+	// TODO: Add your command handler code here
+	//mPedestrian.setYCoordinate(-4); //set ped's Y position to -4
+	//mVehicle.SensePedestrian(std::make_shared<Pedestrian>(mPedestrian)); //sense pedestrian
+	//SetTimer(1, 100, 0); //run the scenario
+		// TODO: Add your command handler code here
+	mPedestrian.setYCoordinate(-5); //set ped's Y position to -4
+	mVehicle.SensePedestrian(std::make_shared<Pedestrian>(mPedestrian)); //sense pedestrian
+	SetTimer(2, 100, 0); //run the scenario
 }
 
 /** Event handler for a timer
@@ -168,7 +186,29 @@ void CChildView::OnTimer(UINT_PTR nIDEvent)
 			Invalidate();
 		}
 		break;
+
+	// in motion scenarios
+	case 2:
+		if (mVehicle.getXCoordinate() < 40 && mVehicle.getVelocity() > 0)
+		{
+			mVehicle.ProcessData();
+			mPedestrian.Move(.1);
+			mVehicle.Move(.1); //update vehicles position based on 100 ms passing
+			Invalidate(); //have to force screen redraw
+		}
+		else
+		{
+			// avoided = true;
+			KillTimer(2);
+			Invalidate();
+			Sleep(1000);
+			mVehicle.Reset();
+			mPedestrian.Reset();
+			Invalidate();
+		}
+		break;
 	}
+
 
 }
 

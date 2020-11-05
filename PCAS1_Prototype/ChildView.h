@@ -49,5 +49,6 @@ public:
 	afx_msg void OnTimer(UINT_PTR nIDEvent);
 	afx_msg void OnRunStaticscenario2();
 	afx_msg void OnRunStaticscenario3();
+	afx_msg void OnRunInMotionscenario1();
 };
 
