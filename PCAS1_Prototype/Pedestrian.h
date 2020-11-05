@@ -47,6 +47,11 @@ public:
 		this->y = y;
 	}
 
+	// Set the limit to the distance traveled
+	void setLimit(double limit) {
+		this->limit = limit;
+	}
+
 	void OnDraw(Gdiplus::Graphics* graphics); //<draws vehicle image
 	void Move(double time); //<updates pedestrians position
 	void Reset(); //<resets to defaults
@@ -56,6 +61,7 @@ private:
 	double diameter = .5; //<diameter of pedestrian in m
 	double x; //x coordinate
 	double y; //y coordinate
+	double limit = 0; // Location where the pedestrian stops
 
 	Gdiplus::Bitmap* mImage;
 };
