@@ -48,14 +48,20 @@ void Pedestrian::OnDraw(Gdiplus::Graphics* graphics)
 */
 void Pedestrian::Move(double time)
 {
-    if (y < limit)
+    if (elapsed < delay) 
     {
-        // velocity of 2.78 m/s or 10kph
-        velocity = 2.78;
-        //displacement of the pedestrian
-        y = y + velocity * time;
+        elapsed += time;
     }
-
+    else
+    {
+        if (y < limit)
+        {
+            // velocity of 2.78 m/s or 10kph
+            velocity = 2.78;
+            //displacement of the pedestrian
+            y = y + velocity * time;
+        }
+    }
 }
 
 /** 
@@ -67,4 +73,6 @@ void Pedestrian::Reset()
     x = 35;
     y = -7;
     velocity = 0;
+    elapsed = 0;
+    delay = 0;
 }

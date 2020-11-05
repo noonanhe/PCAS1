@@ -47,9 +47,14 @@ public:
 		this->y = y;
 	}
 
-	// Set the limit to the distance traveled
+	// Set the end location of the pedestrian
 	void setLimit(double limit) {
 		this->limit = limit;
+	}
+
+	// Set the delay time for pedestrian movement
+	void setDelay(double delay) {
+		this->delay = delay;
 	}
 
 	void OnDraw(Gdiplus::Graphics* graphics); //<draws vehicle image
@@ -62,6 +67,8 @@ private:
 	double x; //x coordinate
 	double y; //y coordinate
 	double limit = 0; // Location where the pedestrian stops
+	double elapsed = 0; // time elapsed since start
+	double delay = 0; // delay before movement
 
 	Gdiplus::Bitmap* mImage;
 };

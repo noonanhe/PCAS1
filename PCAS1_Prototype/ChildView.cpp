@@ -42,7 +42,13 @@ BEGIN_MESSAGE_MAP(CChildView, CWnd)
 	ON_WM_TIMER()
 	ON_COMMAND(ID_RUN_STATICSCENARIO2, &CChildView::OnRunStaticscenario2)
 	ON_COMMAND(ID_RUN_STATICSCENARIO3, &CChildView::OnRunStaticscenario3)
-	ON_COMMAND(ID_RUN_IN_MOTIONSCENARIO1, &CChildView::OnRunInMotionscenario1)
+	ON_COMMAND(ID_RUN_STOPSTARTSCENARIO1, &CChildView::OnRunStopStartscenario1)
+	ON_COMMAND(ID_RUN_STOPSTARTSCENARIO2, &CChildView::OnRunStopStartscenario2)
+	ON_COMMAND(ID_RUN_STOPSTARTSCENARIO3, &CChildView::OnRunStopStartscenario3)
+	ON_COMMAND(ID_RUN_STARTSTOPSCENARIO1, &CChildView::OnRunStartStopscenario1)
+	ON_COMMAND(ID_RUN_STARTSTOPSCENARIO2, &CChildView::OnRunStartStopscenario2)
+	ON_COMMAND(ID_RUN_STARTSTOPSCENARIO3, &CChildView::OnRunStartStopscenario3)
+	ON_COMMAND(ID_RUN_STARTSTOPSCENARIO4, &CChildView::OnRunStartStopscenario4)
 END_MESSAGE_MAP()
 
 
@@ -141,20 +147,93 @@ void CChildView::OnRunStaticscenario3()
 }
 
 /**
-* This funciton is responsible for running Static Scenario 3
-* Pedestrian remains static at position (35, -4)
+* First scenario of initial movement then stopping
+* Pedestrian moves from (35, -7) to (35, 0)
 */
-void CChildView::OnRunInMotionscenario1()
+void CChildView::OnRunStartStopscenario1()
 {
 	// TODO: Add your command handler code here
-	//mPedestrian.setYCoordinate(-4); //set ped's Y position to -4
-	//mVehicle.SensePedestrian(std::make_shared<Pedestrian>(mPedestrian)); //sense pedestrian
-	//SetTimer(1, 100, 0); //run the scenario
-		// TODO: Add your command handler code here
-	mPedestrian.setYCoordinate(-5); //set ped's Y position to -4
+	mPedestrian.setYCoordinate(-7); //set ped's Y position to -7
+	mPedestrian.setLimit(0); // Set pedestrian's final position to be at 0
 	mVehicle.SensePedestrian(std::make_shared<Pedestrian>(mPedestrian)); //sense pedestrian
 	SetTimer(2, 100, 0); //run the scenario
 }
+
+/**
+* Second scenario of initial movement then stopping
+* Pedestrian moves from (35, -7) to (35, -2)
+*/
+void CChildView::OnRunStartStopscenario2()
+{
+	mPedestrian.setYCoordinate(-7); //set ped's Y position to -7
+	mPedestrian.setLimit(-2); // Set pedestrian's final position to be at -2
+	mVehicle.SensePedestrian(std::make_shared<Pedestrian>(mPedestrian)); //sense pedestrian
+	SetTimer(2, 100, 0); //run the scenario
+}
+
+/**
+* Third scenario of initial movement then stopping
+* Pedestrian moves from (35, -7) to (35, -3)
+*/
+void CChildView::OnRunStartStopscenario3()
+{
+	mPedestrian.setYCoordinate(-7); //set ped's Y position to -7
+	mPedestrian.setLimit(-3); // Set pedestrian's final position to be at -3
+	mVehicle.SensePedestrian(std::make_shared<Pedestrian>(mPedestrian)); //sense pedestrian
+	SetTimer(2, 100, 0); //run the scenario
+}
+
+/**
+* Fourth scenario of initial movement then stopping
+* Pedestrian moves from (35, -7) to (35, -5)
+*/
+void CChildView::OnRunStartStopscenario4()
+{
+	mPedestrian.setYCoordinate(-7); //set ped's Y position to -7
+	mPedestrian.setLimit(-5); // Set pedestrian's final position to be at -5
+	mVehicle.SensePedestrian(std::make_shared<Pedestrian>(mPedestrian)); //sense pedestrian
+	SetTimer(2, 100, 0); //run the scenario
+}
+
+/**
+* First scenario of delayed start then movement
+* Pedestrian stays at (35, 0) for 1.5 seconds before moving
+*/
+void CChildView::OnRunStopStartscenario1()
+{
+	mPedestrian.setYCoordinate(0); //set ped's Y position to 0
+	mPedestrian.setLimit(1000); // No limit on pedestrian position
+	mPedestrian.setDelay(1.5); // Delay time set to 1.5 seconds - might need to be corrected
+	mVehicle.SensePedestrian(std::make_shared<Pedestrian>(mPedestrian)); //sense pedestrian
+	SetTimer(2, 100, 0); //run the scenario
+}
+
+/**
+* Second scenario of delayed start then movement
+* Pedestrian stays at (35, -2) for 1.8 seconds before moving
+*/
+void CChildView::OnRunStopStartscenario2()
+{
+	mPedestrian.setYCoordinate(-2); //set ped's Y position to -2
+	mPedestrian.setLimit(1000);  // No limit on pedestrian position
+	mPedestrian.setDelay(1.8); // Delay time set to 1.8 seconds - might need to be corrected
+	mVehicle.SensePedestrian(std::make_shared<Pedestrian>(mPedestrian)); //sense pedestrian
+	SetTimer(2, 100, 0); //run the scenario
+}
+
+/**
+* Third scenario of delayed start then movement
+* Pedestrian stays at (35, -4) for 1.1 seconds before moving
+*/
+void CChildView::OnRunStopStartscenario3()
+{
+	mPedestrian.setYCoordinate(-2); //set ped's Y position to -4
+	mPedestrian.setLimit(1000); // No limit on pedestrian position
+	mPedestrian.setDelay(1.1); // Delay time set to 1.1 seconds - might need to be corrected
+	mVehicle.SensePedestrian(std::make_shared<Pedestrian>(mPedestrian)); //sense pedestrian
+	SetTimer(2, 100, 0); //run the scenario
+}
+
 
 /** Event handler for a timer
 * param nIDEvent: id of a timer
@@ -207,11 +286,11 @@ void CChildView::OnTimer(UINT_PTR nIDEvent)
 			Invalidate();
 		}
 		break;
+
 	}
 
 
 }
-
 
 
 BOOL CChildView::OnEraseBkgnd(CDC* pDC)

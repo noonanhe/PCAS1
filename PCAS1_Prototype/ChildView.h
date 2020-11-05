@@ -49,6 +49,12 @@ public:
 	afx_msg void OnTimer(UINT_PTR nIDEvent);
 	afx_msg void OnRunStaticscenario2();
 	afx_msg void OnRunStaticscenario3();
-	afx_msg void OnRunInMotionscenario1();
+	afx_msg void OnRunStartStopscenario1();
+	afx_msg void OnRunStartStopscenario2();
+	afx_msg void OnRunStartStopscenario3();
+	afx_msg void OnRunStartStopscenario4();
+	afx_msg void OnRunStopStartscenario1();
+	afx_msg void OnRunStopStartscenario2();
+	afx_msg void OnRunStopStartscenario3();
 };
 
