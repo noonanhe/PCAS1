@@ -64,6 +64,7 @@ void Vehicle::Move(double time)
         //velocity = init_velocity + accel*time
         velocity = velocity + (acceleration * time);
     }
+    this->time = time;
 }
 
 /** Passes on pedestrian information to the sensor

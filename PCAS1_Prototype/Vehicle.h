@@ -43,6 +43,11 @@ public:
 		return velocity;
 	}
 
+	double getTime()
+	{
+		return time;
+	}
+
 	/************* Setters ****************/
 	double setAcceleration(double acceleration) {
 		this->acceleration = acceleration;
@@ -70,6 +75,7 @@ private:
 	double acceleration; //vehicle's acceleration
 	double velocity; //represents vehicles current speed
 	bool failSafe; //indicates whether vehicle is in fail safe mode
+	double time; //current time in simulation
 
 	Gdiplus::Bitmap* mImage; //image to use for vehicle
 

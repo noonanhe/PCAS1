@@ -114,6 +114,15 @@ void CChildView::OnPaint()
 	wstring vehicleAcceleration = to_wstring(mVehicle.getAcceleration());
 	wstring delay = to_wstring(mPedestrian.getDelay());
 
+	// Calculating lost time
+	double currentTime = mVehicle.getTime();
+	double vehicleX = mVehicle.getXCoordinate();
+	double vehicleSteady = mVehicle.getSpeed();
+
+	double expectedTime = vehicleX / vehicleSteady;
+	double lostTime = currentTime - expectedTime;
+	wstring lostTimeString = to_wstring(lostTime);
+
 	// Display "Braking" text to show that the vehicle is braking
 	if (mVehicle.getAcceleration() < 0) {
 		Gdiplus::Font fontBrake (&fontFamily, 12);
@@ -126,12 +135,12 @@ void CChildView::OnPaint()
 	graphics.DrawString(L"Vehicle Speed (km/h) :", -1, &font, PointF(1400, 50), &green);
 	graphics.DrawString(L"Pedestrian Speed (km/h) :", -1, &font, PointF(1400, 75), &green);
 	graphics.DrawString(L"Pedestrian Delay (s) :", -1, &font, PointF(1400, 100), &green);
+	graphics.DrawString(L"Lost Time (s) :", -1, &font, PointF(1400, 125), &green);
 	graphics.DrawString(vehicleAcceleration.c_str(), -1, &font, PointF(1700, 25), &green);
 	graphics.DrawString(vehicleSpeed.c_str(), -1, &font, PointF(1700, 50), &green);
 	graphics.DrawString(pedestrianSpeed.c_str(), -1, &font, PointF(1700, 75), &green);
 	graphics.DrawString(delay.c_str(), -1, &font, PointF(1700, 100), &green);
-
-
+	graphics.DrawString(lostTimeString.c_str(), -1, &font, PointF(1700, 125), &green);
 
 	//if we have just successfully avoided a collision from a scenario
 	if (avoided)
