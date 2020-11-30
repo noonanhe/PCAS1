@@ -124,8 +124,17 @@ void CChildView::OnPaint()
 	double vehicleX = mVehicle.getXCoordinate();
 	double vehicleSteady = mVehicle.getSpeed();
 
-	double expectedTime = vehicleX / vehicleSteady;
-	double lostTime = currentTime - expectedTime;
+	double lostTime = 0;
+	if (mVehicle.getAcceleration() == 0 && round(((mVehicle.getVelocity() * 18) / 5)) == 50) {}
+	else
+	{
+		double currentTime = mVehicle.getTime();
+		double vehicleX = mVehicle.getXCoordinate();
+		double vehicleSteady = mVehicle.getSpeed();
+
+		double expectedTime = vehicleX / 50;
+		lostTime = currentTime - expectedTime;
+	}
 	wstring lostTimeString = to_wstring(lostTime);
 
 	Gdiplus::Font fontBrake(&fontFamily, 20);
