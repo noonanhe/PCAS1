@@ -124,8 +124,12 @@ void CChildView::OnPaint()
 	double vehicleX = mVehicle.getXCoordinate();
 	double vehicleSteady = mVehicle.getSpeed();
 
+	double expectedTime = vehicleX / vehicleSteady;
+	double lostTime = currentTime - expectedTime;
+
+	/*
 	double lostTime = 0;
-	if (mVehicle.getAcceleration() == 0 && round(((mVehicle.getVelocity() * 18) / 5)) == 50) {}
+	if (mVehicle.getAcceleration() == 0) {}
 	else
 	{
 		double currentTime = mVehicle.getTime();
@@ -135,7 +139,11 @@ void CChildView::OnPaint()
 		double expectedTime = vehicleX / 50;
 		lostTime = currentTime - expectedTime;
 	}
+	*/
+
+	//wstring currentTimeString = to_wstring(currentTime);
 	wstring lostTimeString = to_wstring(lostTime);
+	//wstring vehicleXString = to_wstring(vehicleX);
 
 	Gdiplus::Font fontBrake(&fontFamily, 20);
 	SolidBrush red(Color(64, 0, 0));
@@ -166,6 +174,8 @@ void CChildView::OnPaint()
 	graphics.DrawString(pedestrianSpeed.c_str(), -1, &font, PointF(1700, 95), &green);
 	graphics.DrawString(delay.c_str(), -1, &font, PointF(1700, 120), &green);
 	graphics.DrawString(lostTimeString.c_str(), -1, &font, PointF(1700, 145), &green);
+	//graphics.DrawString(vehicleXString.c_str(), -1, &font, PointF(1700, 170), &green);
+	//graphics.DrawString(currentTimeString.c_str(), -1, &font, PointF(1700, 195), &green);
 
 	//if we have just successfully avoided a collision from a scenario
 	if (avoided)
