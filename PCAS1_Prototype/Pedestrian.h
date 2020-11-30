@@ -30,6 +30,10 @@ public:
 		return y;
 	}
 
+	double getDelay() {
+		return delay;
+	}
+
 	/************** Setters **************/
 	void setVelocity(double velocity) {
 		this->velocity = velocity;

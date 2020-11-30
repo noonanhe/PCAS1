@@ -10,6 +10,9 @@
 #include "PCAS1_Prototype.h"
 #include "ChildView.h"
 #include "DoubleBufferDC.h"
+#include <string>
+
+using namespace std;
 
 #ifdef _DEBUG
 #define new DEBUG_NEW
@@ -97,6 +100,38 @@ void CChildView::OnPaint()
 	//draw the vehicle and pedestrian
 	mVehicle.OnDraw(&graphics);
 	mPedestrian.OnDraw(&graphics);
+
+	FontFamily fontFamily(L"Arial");
+	Gdiplus::Font font(&fontFamily, 8);
+	Gdiplus::Font statsTitle(&fontFamily, 10);
+	SolidBrush green(Color(0, 64, 0));
+
+	graphics.DrawString(L"Stats:", -1, &statsTitle, PointF(1400, 0), &green);
+
+	// Obtain the values for speeds, delay, and acceleration
+	wstring pedestrianSpeed = to_wstring(round(((mPedestrian.getVelocity()*18)/5)));
+	wstring vehicleSpeed = to_wstring(round(((mVehicle.getVelocity()*18)/5)));
+	wstring vehicleAcceleration = to_wstring(mVehicle.getAcceleration());
+	wstring delay = to_wstring(mPedestrian.getDelay());
+
+	// Display "Braking" text to show that the vehicle is braking
+	if (mVehicle.getAcceleration() < 0) {
+		Gdiplus::Font fontBrake (&fontFamily, 12);
+		SolidBrush red(Color(64, 0, 0));
+		graphics.DrawString(L"Braking", -1, &fontBrake, PointF(1400, 175), &red);
+	}
+
+	// Display the stats values and titles
+	graphics.DrawString(L"Vehicle Acceleration (m/s^2) :", -1, &font, PointF(1400, 25), &green);
+	graphics.DrawString(L"Vehicle Speed (km/h) :", -1, &font, PointF(1400, 50), &green);
+	graphics.DrawString(L"Pedestrian Speed (km/h) :", -1, &font, PointF(1400, 75), &green);
+	graphics.DrawString(L"Pedestrian Delay (s) :", -1, &font, PointF(1400, 100), &green);
+	graphics.DrawString(vehicleAcceleration.c_str(), -1, &font, PointF(1700, 25), &green);
+	graphics.DrawString(vehicleSpeed.c_str(), -1, &font, PointF(1700, 50), &green);
+	graphics.DrawString(pedestrianSpeed.c_str(), -1, &font, PointF(1700, 75), &green);
+	graphics.DrawString(delay.c_str(), -1, &font, PointF(1700, 100), &green);
+
+
 
 	//if we have just successfully avoided a collision from a scenario
 	if (avoided)
