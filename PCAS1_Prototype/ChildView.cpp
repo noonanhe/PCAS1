@@ -101,12 +101,17 @@ void CChildView::OnPaint()
 	mVehicle.OnDraw(&graphics);
 	mPedestrian.OnDraw(&graphics);
 
+	//draw rectangle for stats
+	SolidBrush rect(Color(255, 255, 153));
+	graphics.DrawRectangle(&pen, 1400, 18, 400, 150);
+	graphics.FillRectangle(&rect, 1400, 18, 400, 150);
+
 	FontFamily fontFamily(L"Arial");
-	Gdiplus::Font font(&fontFamily, 8);
-	Gdiplus::Font statsTitle(&fontFamily, 10);
+	Gdiplus::Font font(&fontFamily, 10);
+	Gdiplus::Font statsTitle(&fontFamily, 12);
 	SolidBrush green(Color(0, 64, 0));
 
-	graphics.DrawString(L"Stats:", -1, &statsTitle, PointF(1400, 0), &green);
+	graphics.DrawString(L"Stats:", -1, &statsTitle, PointF(1400, 20), &green);
 
 	// Obtain the values for speeds, delay, and acceleration
 	wstring pedestrianSpeed = to_wstring(round(((mPedestrian.getVelocity()*18)/5)));
@@ -123,31 +128,42 @@ void CChildView::OnPaint()
 	double lostTime = currentTime - expectedTime;
 	wstring lostTimeString = to_wstring(lostTime);
 
+	Gdiplus::Font fontBrake(&fontFamily, 20);
+	SolidBrush red(Color(64, 0, 0));
+
 	// Display "Braking" text to show that the vehicle is braking
 	if (mVehicle.getAcceleration() < 0) {
-		Gdiplus::Font fontBrake (&fontFamily, 12);
-		SolidBrush red(Color(64, 0, 0));
 		graphics.DrawString(L"Braking", -1, &fontBrake, PointF(1400, 175), &red);
+	}
+	if (mVehicle.getAcceleration() > 0) {
+		graphics.DrawString(L"Accelerating", -1, &fontBrake, PointF(1400, 175), &green);
 	}
 
 	// Display the stats values and titles
-	graphics.DrawString(L"Vehicle Acceleration (m/s^2) :", -1, &font, PointF(1400, 25), &green);
-	graphics.DrawString(L"Vehicle Speed (km/h) :", -1, &font, PointF(1400, 50), &green);
-	graphics.DrawString(L"Pedestrian Speed (km/h) :", -1, &font, PointF(1400, 75), &green);
-	graphics.DrawString(L"Pedestrian Delay (s) :", -1, &font, PointF(1400, 100), &green);
-	graphics.DrawString(L"Lost Time (s) :", -1, &font, PointF(1400, 125), &green);
-	graphics.DrawString(vehicleAcceleration.c_str(), -1, &font, PointF(1700, 25), &green);
-	graphics.DrawString(vehicleSpeed.c_str(), -1, &font, PointF(1700, 50), &green);
-	graphics.DrawString(pedestrianSpeed.c_str(), -1, &font, PointF(1700, 75), &green);
-	graphics.DrawString(delay.c_str(), -1, &font, PointF(1700, 100), &green);
-	graphics.DrawString(lostTimeString.c_str(), -1, &font, PointF(1700, 125), &green);
+	graphics.DrawString(L"Vehicle Acceleration (m/s^2) :", -1, &font, PointF(1400, 45), &green);
+	graphics.DrawString(L"Vehicle Speed (km/h) :", -1, &font, PointF(1400, 70), &green);
+	graphics.DrawString(L"Pedestrian Speed (km/h) :", -1, &font, PointF(1400, 95), &green);
+	graphics.DrawString(L"Pedestrian Delay (s) :", -1, &font, PointF(1400, 120), &green);
+	graphics.DrawString(L"Lost Time (s) :", -1, &font, PointF(1400, 145), &green);
+	if (mVehicle.getAcceleration() < 0)
+	{
+		graphics.DrawString(vehicleAcceleration.c_str(), -1, &font, PointF(1700, 45), &red);
+		graphics.DrawString(vehicleSpeed.c_str(), -1, &font, PointF(1700, 70), &red);
+	}
+	else {
+		graphics.DrawString(vehicleAcceleration.c_str(), -1, &font, PointF(1700, 45), &green);
+		graphics.DrawString(vehicleSpeed.c_str(), -1, &font, PointF(1700, 70), &green);
+	}
+	graphics.DrawString(pedestrianSpeed.c_str(), -1, &font, PointF(1700, 95), &green);
+	graphics.DrawString(delay.c_str(), -1, &font, PointF(1700, 120), &green);
+	graphics.DrawString(lostTimeString.c_str(), -1, &font, PointF(1700, 145), &green);
 
 	//if we have just successfully avoided a collision from a scenario
 	if (avoided)
 	{
 		// Draw the test "Collision Avoided!"
 		FontFamily fontFamily(L"Arial");
-		Gdiplus::Font font(&fontFamily, 16);
+		Gdiplus::Font font(&fontFamily, 24);
 		SolidBrush green(Color(0, 64, 0));
 		graphics.DrawString(L"Collision Avoided!", -1, &font, PointF(600, 50), &green);
 		avoided = false;
