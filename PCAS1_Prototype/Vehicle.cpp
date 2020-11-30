@@ -93,6 +93,7 @@ void Vehicle::ProcessData()
     if (decel == 0)
     {
         //release brakes if they've been applied
+        acceleration = 0;
     }
     else //there's a collision possibility
     {

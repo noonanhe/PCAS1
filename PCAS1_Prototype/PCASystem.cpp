@@ -52,7 +52,7 @@ double PCASystem::CheckCollision(vector<double> ped_info, vector<double> vehicle
 	else
 	{
 		//is vehicle at steady state velocity, if not return?
-		if (vehicle_info[2] != 13.9)
+		if (vehicle_info[2] <= 13.9)
 		{
 			return 3; // moderate acceleration value; temporary
 		}
