@@ -8,6 +8,7 @@
 #include "PCASystem.h"
 #include "BrakeActuator.h"
 #include <memory>
+#include <ctime>
 
 #pragma once
 /** Class that models a vehicle */
@@ -45,7 +46,7 @@ public:
 
 	double getTime()
 	{
-		return time;
+		return (std::clock() - start) / (double)CLOCKS_PER_SEC;
 	}
 
 	/************* Setters ****************/
@@ -59,6 +60,10 @@ public:
 
 	double setYCoordiante(double y) {
 		this->y = y;
+	}
+
+	void setTime() {
+		this->start = std::clock();
 	}
 
 	void OnDraw(Gdiplus::Graphics* graphics); //<draws vehicle image
@@ -75,7 +80,7 @@ private:
 	double acceleration; //vehicle's acceleration
 	double velocity; //represents vehicles current speed
 	bool failSafe; //indicates whether vehicle is in fail safe mode
-	double time; //current time in simulation
+	std::clock_t start; //start time in simulation
 
 	Gdiplus::Bitmap* mImage; //image to use for vehicle
 

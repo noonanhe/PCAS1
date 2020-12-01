@@ -125,25 +125,16 @@ void CChildView::OnPaint()
 	double vehicleSteady = mVehicle.getSpeed();
 
 	double expectedTime = vehicleX / vehicleSteady;
-	double lostTime = currentTime - expectedTime;
+	//double expectedTime = vehicleX / ((18 * vehicleSteady) / 5);
+	//double difference = 0; //(vehicleSteady * currentTime) - vehicleX;
 
-	/*
-	double lostTime = 0;
-	if (mVehicle.getAcceleration() == 0) {}
-	else
-	{
-		double currentTime = mVehicle.getTime();
-		double vehicleX = mVehicle.getXCoordinate();
-		double vehicleSteady = mVehicle.getSpeed();
 
-		double expectedTime = vehicleX / 50;
-		lostTime = currentTime - expectedTime;
-	}
-	*/
+	double lostTime = round(currentTime - expectedTime);
 
-	//wstring currentTimeString = to_wstring(currentTime);
+	wstring currentTimeString = to_wstring(currentTime);
 	wstring lostTimeString = to_wstring(lostTime);
 	//wstring vehicleXString = to_wstring(vehicleX);
+	//wstring expectedTimeString = to_wstring(expectedTime);
 
 	Gdiplus::Font fontBrake(&fontFamily, 20);
 	SolidBrush red(Color(64, 0, 0));
@@ -174,9 +165,17 @@ void CChildView::OnPaint()
 	graphics.DrawString(pedestrianSpeed.c_str(), -1, &font, PointF(1700, 95), &green);
 	graphics.DrawString(delay.c_str(), -1, &font, PointF(1700, 120), &green);
 	graphics.DrawString(lostTimeString.c_str(), -1, &font, PointF(1700, 145), &green);
-	//graphics.DrawString(vehicleXString.c_str(), -1, &font, PointF(1700, 170), &green);
-	//graphics.DrawString(currentTimeString.c_str(), -1, &font, PointF(1700, 195), &green);
 
+	// Debugging displays
+	/*
+	graphics.DrawString(L"Vehicle X position (m) :", -1, &font, PointF(1400, 170), &green);
+	graphics.DrawString(L"Current Time (s) :", -1, &font, PointF(1400, 195), &green);
+	graphics.DrawString(L"Expected Time (s) :", -1, &font, PointF(1400, 220), &green);
+	graphics.DrawString(vehicleXString.c_str(), -1, &font, PointF(1700, 170), &green);
+	graphics.DrawString(currentTimeString.c_str(), -1, &font, PointF(1700, 195), &green);
+	graphics.DrawString(expectedTimeString.c_str(), -1, &font, PointF(1700, 220), &green);
+	*/
+	
 	//if we have just successfully avoided a collision from a scenario
 	if (avoided)
 	{
@@ -195,7 +194,6 @@ void CChildView::OnPaint()
 */
 void CChildView::OnRunScenario1()
 {
-
 	mPedestrian.setYCoordinate(0); //set the pedestrian's Y position to 0
 	mVehicle.SensePedestrian(&mPedestrian); //sense pedestrian
 	//Set a timer to run every 100 ms, this function basically calls OnTimer() every 100 ms
@@ -325,7 +323,7 @@ void CChildView::OnRunStopStartscenario3()
 void CChildView::OnTimer(UINT_PTR nIDEvent)
 {
 	CWnd::OnTimer(nIDEvent);
-
+	
 	//switch statement based on timer id, each run scenario function creates a timer with a unique ID, so each 
 	// case statement refers to a different scenario type
 	switch (nIDEvent)
