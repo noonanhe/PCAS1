@@ -46,7 +46,7 @@ public:
 
 	double getTime()
 	{
-		return (std::clock() - start) / (double)CLOCKS_PER_SEC;
+		return time;
 	}
 
 	/************* Setters ****************/
@@ -62,8 +62,8 @@ public:
 		this->y = y;
 	}
 
-	void setTime() {
-		this->start = std::clock();
+	void setTime(double t) {
+		this->time= t;
 	}
 
 	void OnDraw(Gdiplus::Graphics* graphics); //<draws vehicle image
@@ -80,7 +80,7 @@ private:
 	double acceleration; //vehicle's acceleration
 	double velocity; //represents vehicles current speed
 	bool failSafe; //indicates whether vehicle is in fail safe mode
-	std::clock_t start; //start time in simulation
+	double time = 0; //start time in simulation
 
 	Gdiplus::Bitmap* mImage; //image to use for vehicle
 

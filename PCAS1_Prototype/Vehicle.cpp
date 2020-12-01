@@ -64,6 +64,7 @@ void Vehicle::Move(double time)
         //velocity = init_velocity + accel*time
         velocity = velocity + (acceleration * time);
     }
+    this->time += time;
 }
 
 /** Passes on pedestrian information to the sensor
@@ -72,7 +73,7 @@ void Vehicle::Move(double time)
 void Vehicle::SensePedestrian(Pedestrian* ped)
 {
     sensor->Detect(ped);
-    this->setTime();
+    //this->setTime();
 }
 
 /** 
@@ -115,4 +116,5 @@ void Vehicle::Reset()
     acceleration = 0; //vehicle's acceleration
     velocity = steady_state_speed; //represents vehicles current speed
     failSafe = false; //indicates whether vehicle is in fail safe mode
+    this->time = 0;
 }
