@@ -80,7 +80,7 @@ void Vehicle::SensePedestrian(Pedestrian* ped)
 * This function is resoponsible for calling the PCASystem's Check Collision function
 * and handling the deceleration value returned from that function call
 */
-void Vehicle::ProcessData()
+void Vehicle::ProcessData(double stop_time)
 {
     //put vehicle info in vector form
     vector<double> vehicle_info;
@@ -89,7 +89,7 @@ void Vehicle::ProcessData()
     vehicle_info.push_back(velocity);
     vehicle_info.push_back(acceleration);
     //check for a collision
-    double decel = pca_system->CheckCollision(sensor->SendData(), vehicle_info);
+    double decel = pca_system->CheckCollision(sensor->SendData(), vehicle_info, stop_time);
 
     //if no collision imminent
     if (decel == 0)

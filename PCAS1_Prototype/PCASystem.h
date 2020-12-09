@@ -17,7 +17,7 @@ private:
 	std::shared_ptr<PedestrianSensor> sensor;
 public:
 	PCASystem() {};
-	double CheckCollision(std::vector<double> ped_info, std::vector<double> vehicle_info);
+	double CheckCollision(std::vector<double> ped_info, std::vector<double> vehicle_info, double stop_time = .1);
 	//IsCorrupt()??
 };
 

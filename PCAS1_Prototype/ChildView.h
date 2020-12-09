@@ -56,5 +56,6 @@ public:
 	afx_msg void OnRunStopStartscenario1();
 	afx_msg void OnRunStopStartscenario2();
 	afx_msg void OnRunStopStartscenario3();
+	afx_msg void OnRunFailsafe();
 };
 

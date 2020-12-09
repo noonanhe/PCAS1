@@ -14,7 +14,7 @@ using namespace std;
 * param vehicle_info: vector with x & y position of vehicle and vehicle velocity
 * return: the deceleration requested 0 means no collision imminent so no deceleration needed
 */
-double PCASystem::CheckCollision(vector<double> ped_info, vector<double> vehicle_info)
+double PCASystem::CheckCollision(vector<double> ped_info, vector<double> vehicle_info, double stop_time)
 {
 	/** this is temporary check collision implementation for static scenarios **/
 	//* the max decel value must be applied within 14 m
@@ -46,7 +46,20 @@ double PCASystem::CheckCollision(vector<double> ped_info, vector<double> vehicle
 	{
 		//if so return decel value needed to stop within .5 of pedestrian
 		// accel = v_final - v_initial / 2 * x
-		double decel = (0 - pow(vehicle_info[2], 2)) / (2 * (ped_info[0] - vehicle_info[0] - 2));
+		double future_ped = ped_info[0] + ped_info[1] * stop_time;
+		double future_vehicle = vehicle_info[0] + vehicle_info[1] * stop_time +(.5 * vehicle_info[3] * pow(stop_time, 2));
+		double decel = 0;
+		
+		if (stop_time == .9)
+		{
+			decel = (0 - pow(vehicle_info[2], 2)) / (2 * (ped_info[0] - vehicle_info[0] - 2))*2;
+		}
+		else
+		{
+			decel = (0 - pow(vehicle_info[2], 2)) / (2 * (ped_info[0] - vehicle_info[0] - 2));
+		}
+		
+		//decel = (0 - pow(vehicle_info[2], 2)) / (2 * (future_ped- future_vehicle - (2*stop_time)));
 		return decel;
 	}
 	else

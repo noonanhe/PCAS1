@@ -52,6 +52,7 @@ BEGIN_MESSAGE_MAP(CChildView, CWnd)
 	ON_COMMAND(ID_RUN_STARTSTOPSCENARIO2, &CChildView::OnRunStartStopscenario2)
 	ON_COMMAND(ID_RUN_STARTSTOPSCENARIO3, &CChildView::OnRunStartStopscenario3)
 	ON_COMMAND(ID_RUN_STARTSTOPSCENARIO4, &CChildView::OnRunStartStopscenario4)
+	ON_COMMAND(ID_RUN_FAILSAFE, &CChildView::OnRunFailsafe)
 END_MESSAGE_MAP()
 
 
@@ -313,7 +314,17 @@ void CChildView::OnRunStopStartscenario3()
 	mPedestrian.setLimit(1000); // No limit on pedestrian position
 	mPedestrian.setDelay(1.1); // Delay time set to 1.1 seconds - might need to be corrected
 	mVehicle.SensePedestrian(&mPedestrian); //sense pedestrian
-	SetTimer(2, 100, 0); //run the scenario
+	SetTimer(3, 100, 0); //run the scenario
+}
+
+
+void CChildView::OnRunFailsafe()
+{
+	// TODO: Add your command handler code here
+	mPedestrian.setYCoordinate(0); //set the pedestrian's Y position to 0
+	mVehicle.SensePedestrian(&mPedestrian); //sense pedestrian
+	//Set a timer to run every 100 ms, this function basically calls OnTimer() every 100 ms
+	SetTimer(4, 100, 0);
 }
 
 
@@ -389,6 +400,24 @@ void CChildView::OnTimer(UINT_PTR nIDEvent)
 			Invalidate(); //force screen to redraw
 		}
 		break;
+	case 4: 
+		if (mVehicle.getXCoordinate() < 40 && mVehicle.getVelocity() > 0.1)
+		{
+			mVehicle.ProcessData(.9); //check for collisions, update decel as necessary
+			mVehicle.Move(.1); //update vehicles position based on 100 ms passing
+			Invalidate(); //have to force screen redraw
+		}
+		else
+		{
+			avoided = true; //this is needed for "Collision Avoided" text to appear
+			KillTimer(4); //kill the timer cause the scenario is done
+			Invalidate(); //force screen to redraw so we can see the text
+			Sleep(1000); //pause
+			mVehicle.Reset(); //reset vehicle so another scenario can be run
+			mPedestrian.Reset(); //reset pedestrian so another scenario can be run
+			Invalidate(); //force screen to redraw
+		}
+		break;
 	}
 
 
@@ -401,6 +430,8 @@ BOOL CChildView::OnEraseBkgnd(CDC* pDC)
 
 	return FALSE;
 }
+
+
 
 
 
