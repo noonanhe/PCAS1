@@ -1,0 +1,365 @@
+<!Doctype html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <title> Prototype </title>
+    <link href="the_Main.css" type="text/css" rel="stylesheet" />
+</head>
+
+<style>
+    #myContainer {
+        width: 1500px;
+        height: 800px;
+        position: relative;
+        background: lightblue;
+    }
+    
+    #myVehicle {
+        width: 160px;
+        height: 80px;
+        position: absolute;
+        top: 400px;
+        left: 0px;
+        background: red;
+    }
+    
+    #radio_buttons {
+        background: grey;
+        border-style: solid;
+        border-width: 3px;
+        border-color: black;
+    }
+    /* Different radio selection containers */
+    
+    #stationary_positions {
+        display: none;
+    }
+    
+    #moving_type {
+        display: none;
+    }
+    
+    #moving_stop_scenarios {
+        display: none;
+    }
+    
+    #moving_delayed_scenarios {
+        display: none;
+    }
+    /*Stationary pedestrian video containers */
+    
+    #stationary0_video {
+        display: none;
+    }
+    
+    #stationary1_video {
+        display: none;
+    }
+    
+    #stationary2_video {
+        display: none;
+    }
+    /* Moving the stopped video containers */
+    
+    #movingstop0_video {
+        display: none;
+    }
+    
+    #movingstop1_video {
+        display: none;
+    }
+    
+    #movingstop2_video {
+        display: none;
+    }
+    
+    #movingstop3_video {
+        display: none;
+    }
+    /* delayed moving video containers */
+    
+    #delayed0_video {
+        display: none;
+    }
+    
+    #delayed1_video {
+        display: none;
+    }
+    
+    #delayed2_video {
+        display: none;
+    }
+</style>
+
+<body>
+    <div id="nav">
+        <ul>
+            <li><a href="index.html">Welcome</a></li>
+            <li>
+                <a href="http://www.cse.msu.edu/~chengb/%22%3EInstructor"></a>
+            </li>
+            <li>
+                <a href=" https://www.cse.msu.edu/~cse435/%22%3ECourse Page"></a>
+            </li>
+            <li><a href="PCAS.pdf">Project Description</a></li>
+            <li>
+                <a href="https://docs.google.com/document/d/1ZC-J3R8Zoc6EGXtnVj3fag_AsQVyNXeZ/edit%22%3ESRS"></a>
+            </li>
+            <li><a href="prototype.html ">Prototype</a></li>
+            <li><a href=" ">Bibliography</a></li>
+            <li><a href="Protected/groupinfo.html ">Private</a></li>
+        </ul>
+    </div>
+
+    <article>
+        <h1 style="text-align:center">PCAS1 Prototype</h1>
+        <!---
+    <p>
+        <button onclick="MoveVehicle()">Move Vehicle</button>
+    </p>
+
+    <div id="myContainer">
+        <img id="myVehicle" src="images/vehicle.png"></img>
+    </div>
+    -->
+        <p>Welcome to the Pedestrian Collision Avoidance System Prototype! The purpose of this prototype is to allow you to gain further understanding on the behavior of this system. To accomplish this, you will be asked a series of questions regarding potential
+            scenarios. Once all the necessary selections have been made, you will be presented with a video demonstration of the system's behavior for the particular set of constraints you selected. When you are done watching the demonstration video for
+            a particular scenario, clicking on the Reset button will return you to the first set of selections, allowing you to investigate a different scenario.
+        </p>
+        <!-- Selection part of prototype -->
+        <div id="radio_buttons">
+
+            <!-- Selecting for type of pedestrian behavior -->
+            <div id="pedestrian_type">
+                <p><b>Select Pedestrian Behaviour: </b></p>
+                <input type="radio" id="stationary" name="ped_type" value="stationary">
+                <label for="stationary">Stationary Pedestrian</label><br>
+                <input type="radio" id="moving" name="ped_type" value="moving">
+                <label for="moving">Moving Pedestrian</label><br><br>
+                <button onclick="PedSelect()">Submit</button>
+            </div>
+
+            <!-- Selecting positions for stationary pedestrian -->
+            <div id="stationary_positions">
+                <p><b>Select Pedestrian coordinate position: </b></p>
+                <input type="radio" id="zero" name="stat_scenario" value="zero">
+                <label for="zero">x: 35, y: 0</label><br>
+                <input type="radio" id="neg2" name="stat_scenario" value="neg2">
+                <label for="neg2">x: 35, y: -2</label><br>
+                <input type="radio" id="neg4" name="stat_scenario" value="neg4">
+                <label for="neg4">x: 35, y: -4</label><br><br>
+                <button onclick="StationarySelect()">Submit</button>
+            </div>
+
+            <!-- Moving type -->
+            <div id="moving_type">
+                <p><b>Select moving pedestrian's behavior: </b></p>
+                <input type="radio" id="moving_stop" name="move_type" value="moving_stope">
+                <label for="moving_stop">Pedestrian is moving then stops.</label><br>
+                <input type="radio" id="moving_delayed" name="move_type" value="moving_delayed">
+                <label for="moving_delayed">Pedestrian begins moving after a time delay.</label><br><br>
+                <button onclick="MovingTypeSelect()">Submit</button>
+            </div>
+
+            <!-- Moving and the Stopped scenarios -->
+            <div id="moving_stop_scenarios">
+                <p><b>Select the stopping position of the pedestrian: </b></p>
+                <input type="radio" id="endzero" name="movestop_scenarios" value="endzero">
+                <label for="endzero">x: 35, y: 0</label><br>
+                <input type="radio" id="endneg2" name="movestop_scenarios" value="endneg2">
+                <label for="endneg2">x: 35, y: -2</label><br>
+                <input type="radio" id="endneg3" name="movestop_scenarios" value="endneg3">
+                <label for="endneg3">x: 35, y: -3</label><br>
+                <input type="radio" id="endneg5" name="movestop_scenarios" value="endneg5">
+                <label for="endneg5">x: 35, y: -5</label><br><br>
+                <button onclick="MovingStopSelect()">Submit</button>
+            </div>
+
+            <!-- Delayed moving scenarios -->
+            <div id="moving_delayed_scenarios">
+                <p><b>Select the time delay before pedestrian begins moving: </b></p>
+                <input type="radio" id="1.5" name="movedelayed_scenarios" value="1.5">
+                <label for="1.5">1.5 seconds</label><br>
+                <input type="radio" id="1.8" name="movedelayed_scenarios" value="1.8">
+                <label for="1.8">1.8 seconds</label><br>
+                <input type="radio" id="1.1" name="movedelayed_scenarios" value="1.1">
+                <label for="1.1">1.1 seconds</label><br><br>
+                <button onclick="MovingDelaySelect()">Submit</button>
+            </div>
+
+            <!-- Video for Stationary scenario 0-->
+            <div id="stationary0_video">
+                <h4>Stationary Pedestrian: (35, 0)</h4>
+                <p> In this scenario, the pedestrian remains stationary at coordinate position x = 35 m, y = 0 m. In order to avoid collision, the vehicle has to slow to a complete stop.
+                </p>
+                <video width="500" height="350" controls>
+                <source src="Prototype Videos/Stationary0.mp4" type="video/mp4">
+            </video>
+            </div>
+            <!-- Video for Stationary scenario 1-->
+            <div id="stationary1_video">
+                <h4>Stationary Pedestrian: (35, -2)</h4>
+                <p> In this scenario, the pedestrian remains stationary at coordinate position x = 35 m, y = -2 m. In this instance, the pedestrian is not moving and is not within the vehicle's collision zone, thus the vehicle is free to continue on at steady
+                    state velocity.
+                </p>
+                <video width="500" height="350" controls>
+                <source src="Prototype Videos/Stationary1.mp4" type="video/mp4">
+            </video>
+            </div>
+            <!-- Video for Stationary scenario 2-->
+            <div id="stationary2_video">
+                <h4>Stationary Pedestrian: (35, -4)</h4>
+                <p> In this scenario, the pedestrian remains stationary at coordinate position x = 35 m, y = -4 m. In this instance, the pedestrian is not moving and is not within the vehicle's collision zone, thus the vehicle is free to continue on at steady
+                    state velocity.
+                </p>
+                <video width="500" height="350" controls>
+                <source src="Prototype Videos/Stationary0.mp4" type="video/mp4">
+            </video>
+            </div>
+            <!-- Video for Moving then stopped secnario 0-->
+            <div id="movingstop0_video">
+                <h4>Moving pedestrian that decides to stop: </h4>
+                <p> In this scenario, the pedestrian begins at position x = 35 m, y = -7 m. They are moving in the positive y directions, perpendicular to the vehicle at a speed of 10 kph. The pedestrian then decideds to stop at position x = 35 m, y = 0 m.
+                    To avoid collision, the vehicle must slow to a complete stop.
+                </p>
+                <video width="500" height="350" controls>
+                <source src="Prototype Videos/MovingStopped0.mp4" type="video/mp4">
+            </video>
+            </div>
+            <!-- Video for Moving then stopped secnario 1-->
+            <div id="movingstop1_video">
+                <h4>Moving pedestrian that decides to stop: </h4>
+                <p> In this scenario, the pedestrian begins at position x = 35 m, y = -7 m. They are moving in the positive y directions, perpendicular to the vehicle at a speed of 10 kph. The pedestrian then decideds to stop at position x = 35 m, y = -2
+                    m. To avoid collision, the vehicle begins to slow down after detecting that the pedestrian's trajectory intersects with its path. The pedestrian remains within the collision zone of the vehicle, thus the vehicle comes to a complete
+                    stop.
+                </p>
+                <video width="500" height="350" controls>
+                <source src="Prototype Videos/MovingStopped1.mp4" type="video/mp4">
+            </video>
+            </div>
+            <!-- Video for Moving then stopped secnario 2-->
+            <div id="movingstop2_video">
+                <h4>Moving pedestrian that decides to stop: </h4>
+                <p> In this scenario, the pedestrian begins at position x = 35 m, y = -7 m. They are moving in the positive y directions, perpendicular to the vehicle at a speed of 10 kph. The pedestrian then decideds to stop at position x = 35 m, y = -3
+                    m. To avoid collision, the vehicle begins to slow down after detecting that the pedestrian's trajectory intersects with its path. However, once the pedestrian stops, there is no longer a potential for collision, thus the vehicle can
+                    return to steady state velocity.
+                </p>
+                <video width="500" height="350" controls>
+                <source src="Prototype Videos/MovingStopped2.mp4" type="video/mp4">
+            </video>
+            </div>
+            <!-- Video for Moving then stopped secnario 3-->
+            <div id="movingstop3_video">
+                <h4>Moving pedestrian that decides to stop: </h4>
+                <p> In this scenario, the pedestrian begins at position x = 35 m, y = -7 m. They are moving in the positive y directions, perpendicular to the vehicle at a speed of 10 kph. The pedestrian then decideds to stop at position x = 35 m, y = -5
+                    m. To avoid collision, the vehicle begins to slow down after detecting that the pedestrian's trajectory intersects with its path. However, once the pedestrian stops, there is no longer a potential for collision, thus the vehicle can
+                    return to steady state velocity.
+                </p>
+                <video width="500" height="350" controls>
+                <source src="Prototype Videos/MovingStopped3.mp4" type="video/mp4">
+            </video>
+            </div>
+            <!-- Video for delayed scenario 0-->
+            <div id="delayed0_video">
+                <h4>Pedestrian that moves after a time delay: </h4>
+                <p> In this scenario, the pedestrian begins at position x = 35 m, y = 0 m. The pedestrian begins moving after a time delay of 1.5 seconds. To avoid collision, the vehicle slows as it approaches the pedestrian. Once the pedestrian moves out
+                    of the vehicle's collision zone, the vehicle can return to steady state velocity and continue on its journey.
+                </p>
+                <video width="500" height="350" controls>
+                <source src="Prototype Videos/Delayed0.mp4" type="video/mp4">
+            </video>
+            </div>
+            <!-- Video for delayed scenario 1-->
+            <div id="delayed1_video">
+                <h4>Pedestrian that moves after a time delay: </h4>
+                <p> In this scenario, the pedestrian begins at position x = 35 m, y = -2 m. The pedestrian begins moving after a time delay of 1.8 seconds. To avoid collision, the vehicle slows as it approaches the pedestrian. Once the pedestrian moves out
+                    of the vehicle's collision zone, the vehicle can return to steady state velocity and continue on its journey.
+                </p>
+                <video width="500" height="350" controls>
+                <source src="Prototype Videos/Delayed1.mp4" type="video/mp4">
+            </video>
+            </div>
+            <!-- Video for delayed scenario 2-->
+            <div id="delayed2_video">
+                <h4>Pedestrian that moves after a time delay: </h4>
+                <p> In this scenario, the pedestrian begins at position x = 35 m, y = -4 m. The pedestrian begins moving after a time delay of 1.5 seconds. To avoid collision, the vehicle slows as it approaches the pedestrian. Once the pedestrian moves out
+                    of the vehicle's collision zone, the vehicle can return to steady state velocity and continue on its journey.
+                </p>
+                <video width="500" height="350" controls>
+                <source src="Prototype Videos/Delayed2.mp4" type="video/mp4">
+            </video>
+            </div>
+        </div>
+    </article>
+    <article>
+        <h1>Windows executable</h1>
+        <p>If you are running Windows OS 7 or higher and want to investigate this prototype further, follow the steps below to download and run it yourself!</p>
+
+        <h3>Steps to download and run:</h3>
+        <p>1. Click on this <a href="PCAS1_Prototype.zip " download>link </a>to download the executable zip file.</p>
+        <p>2. Unzip the folder. When you unzip you should end up with a folder called. PCAS1_Prototype with an images folder and .exe file inside of it.</p>
+        <p>3. Double click on the .exe file to run it.</p>
+        <p>4. If the .exe file is running you should see a new window with a x,y axis, and an image of a car and pedestrian.</p>
+        <p>5. To run the prototype through scenarios, click on the 'Run' menu bar option and select from the drop-down menu that appears.</p>
+        <p>6. After one scneario is finished running, the prototype demonstration resets, and you can then select another scenario to run.</p>
+    </article>
+    <script>
+        function PedSelect() {
+            document.getElementById('pedestrian_type').style.display = 'none';
+            if (document.getElementById('stationary').checked) {
+                document.getElementById('stationary_positions').style.display = 'block';
+            } else if (document.getElementById('moving').checked) {
+                document.getElementById('moving_type').style.display = 'block';
+            }
+        }
+
+        function MovingTypeSelect() {
+            document.getElementById('moving_type').style.display = 'none';
+            if (document.getElementById('moving_stop').checked) {
+                document.getElementById('moving_stop_scenarios').style.display = 'block';
+            } else if (document.getElementById('moving_delayed').checked) {
+                document.getElementById('moving_delayed_scenarios').style.display = 'block';
+            }
+        }
+
+        function StationarySelect() {
+            document.getElementById('stationary_positions').style.display = 'none';
+            if (document.getElementById('zero').checked) {
+                document.getElementById('stationary0_video').style.display = 'block';
+            } else if (document.getElementById('neg2').checked) {
+                document.getElementById('stationary1_video').style.display = 'block';
+            } else if (document.getElementById('neg4').checked) {
+                document.getElementById('stationary2_video').style.display = 'block';
+            }
+        }
+
+        function MovingStopSelect() {
+            document.getElementById('moving_stop_scenarios').style.display = 'none';
+            if (document.getElementById('endzero').checked) {
+                document.getElementById('movingstop0_video').style.display = 'block';
+            } else if (document.getElementById('endneg2').checked) {
+                document.getElementById('movingstop1_video').style.display = 'block';
+            } else if (document.getElementById('endneg3').checked) {
+                document.getElementById('movingstop2_video').style.display = 'block';
+            } else if (document.getElementById('endneg5').checked) {
+                document.getElementById('movingstop3_video').style.display = 'block';
+            }
+        }
+
+        function MovingDelaySelect() {
+            document.getElementById('moving_delayed_scenarios').style.display = 'none';
+            if (document.getElementById('1.5').checked) {
+                document.getElementById('delayed0_video').style.display = 'block';
+            } else if (document.getElementById('1.8').checked) {
+                document.getElementById('delayed1_video').style.display = 'block';
+            } else if (document.getElementById('1.1').checked) {
+                document.getElementById('delayed2_video').style.display = 'block';
+            }
+        }
+    </script>
+
+</body>
+
+
+</html>
